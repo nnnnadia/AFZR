@@ -1,15 +1,23 @@
-import React, { useContext } from 'react';
+import { List, ListItemButton, ListItemText } from '@mui/material';
+import React, { useState, useContext } from 'react';
 import TaskContext from '../context';
 
 function TaskList() {
+  const [selectedTask, setSelectedTask] = useState(null);
   const { tasks } = useContext(TaskContext);
 
   return (
-    <ul>
+    <List>
       { tasks.map((task, index) => (
-        <li key={ index }>{ task }</li>
+        <ListItemButton
+          key={ index }
+          selected={ selectedTask === index }
+          onClick={ () => setSelectedTask(index) }
+        >
+          <ListItemText primary={ task } />
+        </ListItemButton>
       )) }
-    </ul>
+    </List>
   );
 }
 
