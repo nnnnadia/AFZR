@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { List, ListItem, ListItemButton, IconButton, ListItemText } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import TaskContext from '../context';
+import { TaskContext } from '../context';
 
 function TaskList() {
   const [selectedTask, setSelectedTask] = useState(null);
@@ -9,7 +9,7 @@ function TaskList() {
 
   const handleDelete = (idToBeDeleted) => {
     const updatedTasks = getTasksParsed().filter(({ id }) => id !== idToBeDeleted);
-    setTasksStringfied(false, updatedTasks);
+    setTasksStringfied(updatedTasks);
   };
 
   return (

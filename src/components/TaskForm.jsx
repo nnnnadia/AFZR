@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Button, Stack, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
-import TaskContext from '../context';
+import { TaskContext } from '../context';
 import { PaperForm } from '../styles';
 
 function TaskForm() {
@@ -10,7 +10,7 @@ function TaskForm() {
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
-    setTasksStringfied(true, { ...task, id: nanoid() });
+    setTasksStringfied({ ...task, id: nanoid() }, true);
     setTask({ ...task, description: '' });
   }
 

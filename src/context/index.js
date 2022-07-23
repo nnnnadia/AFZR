@@ -1,5 +1,11 @@
 import TaskContext from './TaskContext';
 import TaskProvider from './TaskProvider';
+import DateContext from './DateContext';
+import DateProvider from './DateProvider';
 
-export { TaskProvider };
-export default TaskContext;
+export {
+  TaskContext,
+  TaskProvider,
+  DateContext,
+  DateProvider,
+};

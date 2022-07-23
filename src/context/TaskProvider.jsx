@@ -5,7 +5,7 @@ import TaskContext from './TaskContext';
 function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
-  const setTasksStringfied = (add, newData) => {
+  const setTasksStringfied = (newData, add = false) => {
     if(add) {
       setTasks([...tasks, JSON.stringify({ ...newData })]);
     } else {
