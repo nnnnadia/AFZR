@@ -5,9 +5,24 @@ import TaskContext from './TaskContext';
 function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
+  const setTasksStringfied = (add, newData) => {
+    if(add) {
+      setTasks([...tasks, JSON.stringify({ ...newData })]);
+    } else {
+      setTasks([...newData.map((task) => JSON.stringify(task))]);
+    }
+  };
+
+  const getTasksParsed = () => {
+    const parsedTasks = tasks.map((task) => JSON.parse(task))
+    return parsedTasks;
+  }
+
   const CONTEXT_VALUE = {
     tasks,
     setTasks,
+    setTasksStringfied,
+    getTasksParsed,
   };
 
   return (

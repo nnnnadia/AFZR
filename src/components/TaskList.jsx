@@ -5,21 +5,21 @@ import TaskContext from '../context';
 
 function TaskList() {
   const [selectedTask, setSelectedTask] = useState(null);
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { getTasksParsed, setTasksStringfied } = useContext(TaskContext);
 
-  const handleDelete = (indexToBeDeleted) => {
-    const updatedTasks = tasks.filter((_task, index) => index !== indexToBeDeleted);
-    setTasks(updatedTasks);
+  const handleDelete = (idToBeDeleted) => {
+    const updatedTasks = getTasksParsed().filter(({ id }) => id !== idToBeDeleted);
+    setTasksStringfied(false, updatedTasks);
   };
 
   return (
     <List>
-      { tasks.map((task, index) => (
+      { getTasksParsed().map(({ id, description }) => (
         <ListItem
-          key={ index }
+          key={ id }
           secondaryAction={
-            <div hidden={ selectedTask !== index }>
-              <IconButton onClick={ () => handleDelete(index) }>
+            <div hidden={ selectedTask !== id }>
+              <IconButton onClick={ () => handleDelete(id) }>
                 <DeleteForeverIcon />
               </IconButton>
             </div>
@@ -27,10 +27,10 @@ function TaskList() {
           disablePadding
         >
           <ListItemButton
-            selected={ selectedTask === index }
-            onClick={ () => setSelectedTask(index) }
+            selected={ selectedTask === id }
+            onClick={ () => setSelectedTask(id) }
           >
-            <ListItemText primary={ task } />
+            <ListItemText primary={ description } />
           </ListItemButton>
         </ListItem>
       )) }
