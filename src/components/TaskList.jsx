@@ -7,7 +7,7 @@ import { TaskContext } from '../context';
 
 function TaskList() {
   const [selectedTask, setSelectedTask] = useState(null);
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { tasks, setTasks, task: { date: formDate } } = useContext(TaskContext);
 
   const handleDelete = (idToBeDeleted) => {
     const updatedTasks = tasks.filter(({ id }) => id !== idToBeDeleted);
@@ -16,26 +16,31 @@ function TaskList() {
 
   return (
     <List>
-      { tasks.map(({ id, description }) => (
-        <ListItem
-          key={id}
-          secondaryAction={(
-            <div hidden={selectedTask !== id}>
-              <IconButton onClick={() => handleDelete(id)}>
-                <DeleteForeverIcon />
-              </IconButton>
-            </div>
-          )}
-          disablePadding
-        >
-          <ListItemButton
-            selected={selectedTask === id}
-            onClick={selectedTask === id ? () => setSelectedTask(null) : () => setSelectedTask(id)}
+      { tasks
+        .filter(({ date }) => date.getDate() === formDate.getDate()
+          && date.getMonth() === formDate.getMonth()
+          && date.getYear() === formDate.getYear())
+        .map(({ id, description }) => (
+          <ListItem
+            key={id}
+            secondaryAction={(
+              <div hidden={selectedTask !== id}>
+                <IconButton onClick={() => handleDelete(id)}>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </div>
+            )}
+            disablePadding
           >
-            <ListItemText primary={description} />
-          </ListItemButton>
-        </ListItem>
-      )) }
+            <ListItemButton
+              selected={selectedTask === id}
+              onClick={selectedTask === id
+                ? () => setSelectedTask(null) : () => setSelectedTask(id)}
+            >
+              <ListItemText primary={description} />
+            </ListItemButton>
+          </ListItem>
+        )) }
     </List>
   );
 }
