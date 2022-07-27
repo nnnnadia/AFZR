@@ -34,15 +34,15 @@ function TaskForm() {
         >
           <TextField
             fullWidth
+            variant="filled"
+            color="secondary"
             id="standard-basic"
             label="Nova tarefa"
-            variant="standard"
-            color="secondary"
             value={task.description}
             onChange={({ target }) => setTask({ ...task, description: target.value })}
           />
           <Button
-            variant="outlined"
+            variant="contained"
             color="secondary"
             type="submit"
             disabled={task.description.length === 0}

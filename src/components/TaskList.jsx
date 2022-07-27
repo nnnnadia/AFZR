@@ -30,7 +30,7 @@ function TaskList() {
         >
           <ListItemButton
             selected={selectedTask === id}
-            onClick={() => setSelectedTask(id)}
+            onClick={selectedTask === id ? () => setSelectedTask(null) : () => setSelectedTask(id)}
           >
             <ListItemText primary={description} />
           </ListItemButton>
