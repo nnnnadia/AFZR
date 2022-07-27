@@ -1,32 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import TaskContext from './TaskContext';
 
 function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
+  // const [taskFormControls, setTaskFormControls] = useState({});
 
-  const setTasksStringfied = (newData, add = false) => {
-    if(add) {
-      setTasks([...tasks, JSON.stringify({ ...newData })]);
-    } else {
-      setTasks([...newData.map((task) => JSON.stringify(task))]);
-    }
-  };
-
-  const getTasksParsed = () => {
-    const parsedTasks = tasks.map((task) => JSON.parse(task))
-    return parsedTasks;
-  }
-
-  const CONTEXT_VALUE = {
+  const CONTEXT_VALUE = useMemo(() => ({
     tasks,
     setTasks,
-    setTasksStringfied,
-    getTasksParsed,
-  };
+  }));
 
   return (
-    <TaskContext.Provider value={ CONTEXT_VALUE }>
+    <TaskContext.Provider value={CONTEXT_VALUE}>
       { children }
     </TaskContext.Provider>
   );
