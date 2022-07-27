@@ -4,11 +4,19 @@ import TaskContext from './TaskContext';
 
 function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
-  // const [taskFormControls, setTaskFormControls] = useState({});
+  const [taskFormControls, setTaskFormControls] = useState({
+    description: '',
+    date: new Date(),
+  });
+  const [todaysDate, setTodaysDate] = useState(new Date());
 
   const CONTEXT_VALUE = useMemo(() => ({
     tasks,
     setTasks,
+    task: taskFormControls,
+    setTask: setTaskFormControls,
+    todaysDate,
+    setTodaysDate,
   }));
 
   return (

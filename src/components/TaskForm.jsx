@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   Button, Paper, Stack, TextField,
@@ -6,11 +6,12 @@ import {
 import { TaskContext } from '../context';
 
 function TaskForm() {
-  const [task, setTask] = useState({
-    description: '',
-    date: new Date(),
-  });
-  const { tasks, setTasks } = useContext(TaskContext);
+  const {
+    tasks,
+    setTasks,
+    task,
+    setTask,
+  } = useContext(TaskContext);
 
   const getTaskId = () => Date.now();
 
@@ -53,9 +54,9 @@ function TaskForm() {
         <DatePicker
           label="Escolha a data"
           value={task.date}
-          onChange={(date) => setTask({ ...task, date })}
+          onChange={(newDate) => setTask({ ...task, date: new Date(newDate) })}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          renderInput={(params) => <TextField fullWidth {...params} />}
+          renderInput={(params) => <TextField fullWidth color="secondary" {...params} />}
         />
       </Paper>
     </form>
