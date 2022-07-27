@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
-  Button, Stack, TextField,
+  Button, Paper, Stack, TextField,
 } from '@mui/material';
 import { TaskContext } from '../context';
-import { PaperForm } from '../styles';
 
 function TaskForm() {
   const [task, setTask] = useState({
@@ -23,7 +22,10 @@ function TaskForm() {
 
   return (
     <form>
-      <PaperForm elevation={2}>
+      <Paper
+        elevation={2}
+        sx={{ p: 4 }}
+      >
         <Stack
           direction="row"
           spacing={2}
@@ -55,7 +57,7 @@ function TaskForm() {
           // eslint-disable-next-line react/jsx-props-no-spreading
           renderInput={(params) => <TextField fullWidth {...params} />}
         />
-      </PaperForm>
+      </Paper>
     </form>
   );
 }
