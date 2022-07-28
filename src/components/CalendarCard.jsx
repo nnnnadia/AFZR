@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import {
   Card,
 } from '@mui/material';
-import CalendarCardHeader from './CalendarCardHeader';
+import { CalendarCardHeader, CalendarCardTasksList } from './calendar-card';
 
 function CalendarCard({ date }) {
   return (
     <Card
-      sx={{ p: 4, maxWidth: '250px' }}
+      sx={{ maxWidth: '250px' }}
     >
       <CalendarCardHeader date={date} />
+      <CalendarCardTasksList date={date} />
     </Card>
   );
 }
