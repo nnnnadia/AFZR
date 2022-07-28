@@ -14,6 +14,14 @@ function TaskList() {
     setTasks(updatedTasks);
   };
 
+  const handleDone = (idToBeDone) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === idToBeDone) return { ...task, done: !task.done };
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
   return (
     <List>
       { tasks
@@ -30,6 +38,7 @@ function TaskList() {
                 </IconButton>
               </div>
             )}
+            onDoubleClick={() => handleDone(id)}
             disablePadding
           >
             <ListItemButton
