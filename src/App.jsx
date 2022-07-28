@@ -3,7 +3,7 @@ import { Box, Grid, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { TaskForm, TaskList } from './components';
+import { Calendar, TaskForm, TaskList } from './components';
 import { TaskProvider } from './context';
 import theme from './styles/Theme';
 
@@ -20,7 +20,7 @@ function App() {
                   <TaskList />
                 </Grid>
                 <Grid item xs={12} sm={12} md={7} lg={8} xl={9}>
-                  <p>oi</p>
+                  <Calendar />
                 </Grid>
               </Grid>
             </Box>

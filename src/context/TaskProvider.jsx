@@ -8,11 +8,28 @@ function TaskProvider({ children }) {
   const [taskFormControls, setTaskFormControls] = useState({
     description: '',
     date: new Date(),
+    done: false,
   });
   const [todaysDate, setTodaysDate] = useState(new Date());
+  const [sortedDates, setSortedDates] = useState([]);
+
+  /**
+   * https://masteringjs.io/tutorials/fundamentals/sort-by-date
+   */
+  const getSortedDates = () => {
+    const uniqueDates = [...new Set(
+      tasks.map((task) => task.date.toDateString()),
+    )];
+    setSortedDates(uniqueDates
+      .map((date) => new Date(date))
+      .sort((date1, date2) => date1 - date2));
+  };
 
   useEffect(
-    () => saveLocalStorage(tasks),
+    () => {
+      saveLocalStorage(tasks);
+      if (tasks) getSortedDates();
+    },
     [tasks],
   );
 
@@ -23,6 +40,7 @@ function TaskProvider({ children }) {
     setTask: setTaskFormControls,
     todaysDate,
     setTodaysDate,
+    sortedDates,
   }));
 
   return (
