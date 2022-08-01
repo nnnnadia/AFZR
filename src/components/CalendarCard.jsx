@@ -8,7 +8,7 @@ import { CalendarCardHeader, CalendarCardTasksList } from './calendar-card';
 function CalendarCard({ date }) {
   return (
     <Card
-      sx={{ maxWidth: '250px' }}
+      sx={{ minWidth: '250px' }}
     >
       <CalendarCardHeader date={date} />
       <CalendarCardTasksList date={date} />
