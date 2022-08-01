@@ -4,6 +4,7 @@ import {
   CardContent, Divider, List, ListItem, ListItemText,
 } from '@mui/material';
 import TaskContext from '../../context/TaskContext';
+import ListItemCardTaskCompletedText from '../../styles/ListItemCardTaskCompletedText';
 
 function CalendarCardTasksList({ date }) {
   const [tasksOfTheDay, setTasksOfTheDay] = useState([]);
@@ -20,11 +21,13 @@ function CalendarCardTasksList({ date }) {
   return (
     <CardContent>
       <List>
-        { tasksOfTheDay && tasksOfTheDay.map((task, index) => (
+        {tasksOfTheDay && tasksOfTheDay.map((task, index) => (
           <>
             {index !== 0 && <Divider />}
             <ListItem key={task.id} disablePadding>
-              <ListItemText primary={task.description} />
+              {task.done
+                ? <ListItemCardTaskCompletedText primary={task.description} />
+                : <ListItemText primary={task.description} />}
             </ListItem>
           </>
         ))}
