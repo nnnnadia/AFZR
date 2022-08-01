@@ -1,24 +1,21 @@
 import React, { useState, useContext } from 'react';
 import {
-  List, ListItem, ListItemButton, IconButton, ListItemText,
+  List, ListItem, ListItemButton, IconButton, ListItemText, ListItemIcon,
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import FlakyIcon from '@mui/icons-material/Flaky';
+import HeartBrokenOutlinedIcon from '@mui/icons-material/HeartBrokenOutlined';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import { TaskContext } from '../context';
 
 function TaskList() {
   const [selectedTask, setSelectedTask] = useState(null);
-  const { tasks, setTasks, task: { date: formDate } } = useContext(TaskContext);
+  const {
+    tasks, setTasks, handleDone, task: { date: formDate },
+  } = useContext(TaskContext);
 
   const handleDelete = (idToBeDeleted) => {
     const updatedTasks = tasks.filter(({ id }) => id !== idToBeDeleted);
-    setTasks(updatedTasks);
-  };
-
-  const handleDone = (idToBeDone) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === idToBeDone) return { ...task, done: !task.done };
-      return task;
-    });
     setTasks(updatedTasks);
   };
 
@@ -28,7 +25,7 @@ function TaskList() {
         .filter(({ date }) => date.getDate() === formDate.getDate()
           && date.getMonth() === formDate.getMonth()
           && date.getYear() === formDate.getYear())
-        .map(({ id, description }) => (
+        .map(({ id, description, done }) => (
           <ListItem
             key={id}
             secondaryAction={(
@@ -36,9 +33,11 @@ function TaskList() {
                 <IconButton onClick={() => handleDelete(id)}>
                   <DeleteForeverIcon />
                 </IconButton>
+                <IconButton onClick={() => handleDone(id)}>
+                  <FlakyIcon />
+                </IconButton>
               </div>
             )}
-            onDoubleClick={() => handleDone(id)}
             disablePadding
           >
             <ListItemButton
@@ -46,6 +45,11 @@ function TaskList() {
               onClick={selectedTask === id
                 ? () => setSelectedTask(null) : () => setSelectedTask(id)}
             >
+              <ListItemIcon>
+                {done
+                  ? <FavoriteTwoToneIcon color="primary" />
+                  : <HeartBrokenOutlinedIcon color="primary" />}
+              </ListItemIcon>
               <ListItemText primary={description} />
             </ListItemButton>
           </ListItem>

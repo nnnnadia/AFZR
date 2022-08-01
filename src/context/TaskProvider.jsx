@@ -25,6 +25,14 @@ function TaskProvider({ children }) {
       .sort((date1, date2) => date1 - date2));
   };
 
+  const handleDone = (idToBeDone) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === idToBeDone) return { ...task, done: !task.done };
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
   useEffect(
     () => {
       saveLocalStorage(tasks);
@@ -36,6 +44,7 @@ function TaskProvider({ children }) {
   const CONTEXT_VALUE = useMemo(() => ({
     tasks,
     setTasks,
+    handleDone,
     task: taskFormControls,
     setTask: setTaskFormControls,
     todaysDate,

@@ -8,7 +8,7 @@ import ListItemCardTaskCompletedText from '../../styles/ListItemCardTaskComplete
 
 function CalendarCardTasksList({ date }) {
   const [tasksOfTheDay, setTasksOfTheDay] = useState([]);
-  const { tasks } = useContext(TaskContext);
+  const { tasks, handleDone } = useContext(TaskContext);
 
   useEffect(
     () => {
@@ -24,7 +24,12 @@ function CalendarCardTasksList({ date }) {
         {tasksOfTheDay && tasksOfTheDay.map((task, index) => (
           <>
             {index !== 0 && <Divider />}
-            <ListItem key={task.id} disablePadding>
+            <ListItem
+              key={task.id}
+              disablePadding
+              sx={{ userSelect: 'none' }}
+              onDoubleClick={() => handleDone(task.id)}
+            >
               {task.done
                 ? <ListItemCardTaskCompletedText primary={task.description} />
                 : <ListItemText primary={task.description} />}
