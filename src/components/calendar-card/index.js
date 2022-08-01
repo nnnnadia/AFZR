@@ -1,5 +1,5 @@
 import CalendarCardHeader from './CalendarCardHeader';
-import CalendarCardTasksList from './CalendarCardTasksList.jsx';
+import CalendarCardTasksList from './CalendarCardTasksList';
 
 export {
   CalendarCardHeader,

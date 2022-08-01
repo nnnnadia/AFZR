@@ -12,6 +12,7 @@ function TaskProvider({ children }) {
   });
   const [todaysDate, setTodaysDate] = useState(new Date());
   const [sortedDates, setSortedDates] = useState([]);
+  const [pastTasks, setPastTasks] = useState([]);
 
   /**
    * https://masteringjs.io/tutorials/fundamentals/sort-by-date
@@ -25,6 +26,15 @@ function TaskProvider({ children }) {
       .sort((date1, date2) => date1 - date2));
   };
 
+  const getPastTasks = () => {
+    const pastUnfinishedTasks = tasks
+      .filter(({ date, done }) => (
+        date < todaysDate
+        && date.getDate() !== todaysDate.getDate()
+        && !done));
+    setPastTasks(pastUnfinishedTasks);
+  };
+
   const handleDone = (idToBeDone) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === idToBeDone) return { ...task, done: !task.done };
@@ -36,7 +46,10 @@ function TaskProvider({ children }) {
   useEffect(
     () => {
       saveLocalStorage(tasks);
-      if (tasks) getSortedDates();
+      if (tasks) {
+        getSortedDates();
+        getPastTasks();
+      }
     },
     [tasks],
   );
@@ -50,6 +63,7 @@ function TaskProvider({ children }) {
     todaysDate,
     setTodaysDate,
     sortedDates,
+    pastTasks,
   }));
 
   return (

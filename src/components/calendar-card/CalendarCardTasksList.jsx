@@ -22,10 +22,9 @@ function CalendarCardTasksList({ date }) {
     <CardContent>
       <List>
         {tasksOfTheDay && tasksOfTheDay.map((task, index) => (
-          <>
+          <div key={task.id}>
             {index !== 0 && <Divider />}
             <ListItem
-              key={task.id}
               disablePadding
               sx={{ userSelect: 'none' }}
               onDoubleClick={() => handleDone(task.id)}
@@ -34,7 +33,7 @@ function CalendarCardTasksList({ date }) {
                 ? <ListItemCardTaskCompletedText primary={task.description} />
                 : <ListItemText primary={task.description} />}
             </ListItem>
-          </>
+          </div>
         ))}
       </List>
     </CardContent>
