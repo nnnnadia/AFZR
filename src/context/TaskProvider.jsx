@@ -10,6 +10,7 @@ function TaskProvider({ children }) {
     date: new Date(),
     done: false,
   });
+  const [selectedTask, setSelectedTask] = useState(null);
   const [todaysDate, setTodaysDate] = useState(new Date());
   const [sortedDates, setSortedDates] = useState([]);
   const [pastTasks, setPastTasks] = useState([]);
@@ -43,6 +44,26 @@ function TaskProvider({ children }) {
     setTasks(updatedTasks);
   };
 
+  const handleDelete = (idToBeDeleted) => {
+    const updatedTasks = tasks.filter(({ id }) => id !== idToBeDeleted);
+    setTasks(updatedTasks);
+  };
+
+  const handleEdit = (idToBeEdited) => {
+    if (selectedTask === idToBeEdited) {
+      setSelectedTask(null);
+      setTaskFormControls({ ...taskFormControls, done: false, description: '' });
+    } else {
+      setSelectedTask(idToBeEdited);
+      const { date, description, done } = tasks.find((savedTask) => savedTask.id === idToBeEdited);
+      setTaskFormControls({
+        date,
+        description,
+        done,
+      });
+    }
+  };
+
   useEffect(
     () => {
       saveLocalStorage(tasks);
@@ -60,10 +81,14 @@ function TaskProvider({ children }) {
     handleDone,
     task: taskFormControls,
     setTask: setTaskFormControls,
+    selectedTask,
+    setSelectedTask,
     todaysDate,
     setTodaysDate,
     sortedDates,
     pastTasks,
+    handleDelete,
+    handleEdit,
   }));
 
   return (

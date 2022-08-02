@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   List, ListItem, ListItemButton, IconButton, ListItemText, ListItemIcon,
 } from '@mui/material';
@@ -9,15 +9,9 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import { TaskContext } from '../context';
 
 function TaskList() {
-  const [selectedTask, setSelectedTask] = useState(null);
   const {
-    tasks, setTasks, handleDone, task: { date: formDate },
+    tasks, handleDelete, handleEdit, handleDone, task: { date: formDate }, selectedTask,
   } = useContext(TaskContext);
-
-  const handleDelete = (idToBeDeleted) => {
-    const updatedTasks = tasks.filter(({ id }) => id !== idToBeDeleted);
-    setTasks(updatedTasks);
-  };
 
   return (
     <List>
@@ -42,8 +36,7 @@ function TaskList() {
           >
             <ListItemButton
               selected={selectedTask === id}
-              onClick={selectedTask === id
-                ? () => setSelectedTask(null) : () => setSelectedTask(id)}
+              onClick={() => handleEdit(id)}
             >
               <ListItemIcon>
                 {done
