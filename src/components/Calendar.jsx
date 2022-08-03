@@ -8,17 +8,23 @@ import LiterallyStackOverflow from '../styles/LiterallyStackOverflow';
 
 function Calendar() {
   const { todaysDate, sortedDates, pastTasks } = useContext(TaskContext);
+  const daysBetween = sortedDates
+    ? moment((sortedDates
+      .find((date) => date > todaysDate)))
+      .diff(todaysDate, 'days')
+    : 0;
+
   return (
     <div>
       <LiterallyStackOverflow direction="row" spacing={2}>
         {pastTasks && <PastTasksCard />}
         <Stack sx={{ position: 'relative' }}>
           <CalendarCard date={todaysDate} />
-          <Fab sx={{ position: 'absolute', right: 5, top: 75 }} color="secondary">
-            {sortedDates
-              && moment((sortedDates.find((date) => date > todaysDate)))
-                .diff(todaysDate, 'days') + 1}
-          </Fab>
+          {daysBetween > 0 && (
+            <Fab sx={{ position: 'absolute', right: 5, top: 75 }} color="secondary">
+              {daysBetween}
+            </Fab>
+          )}
         </Stack>
         {sortedDates && sortedDates.map((date) => {
           if (date > todaysDate) {
