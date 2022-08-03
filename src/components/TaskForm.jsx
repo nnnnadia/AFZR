@@ -7,19 +7,12 @@ import { TaskContext } from '../context';
 
 function TaskForm() {
   const {
-    tasks,
-    setTasks,
     task,
     setTask,
+    selectedTask,
+    handleSubmit,
+    handleEdit,
   } = useContext(TaskContext);
-
-  const getTaskId = () => Date.now();
-
-  const handleTaskSubmit = (e) => {
-    e.preventDefault();
-    setTasks([...tasks, { ...task, id: getTaskId() }]);
-    setTask({ ...task, description: '' });
-  };
 
   return (
     <form>
@@ -44,11 +37,11 @@ function TaskForm() {
           <Button
             variant="contained"
             color="secondary"
-            type="submit"
+            type="button"
             disabled={task.description.length === 0}
-            onClick={handleTaskSubmit}
+            onClick={selectedTask ? () => handleEdit(selectedTask) : () => handleSubmit()}
           >
-            Nova tarefa
+            {selectedTask ? 'Editar tarefa' : 'Nova tarefa'}
           </Button>
         </Stack>
         <DatePicker

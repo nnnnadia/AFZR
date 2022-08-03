@@ -10,7 +10,7 @@ import { TaskContext } from '../context';
 
 function TaskList() {
   const {
-    tasks, handleDelete, handleEdit, handleDone, task: { date: formDate }, selectedTask,
+    tasks, handleDelete, handleSelect, handleDone, task: { date: formDate }, selectedTask,
   } = useContext(TaskContext);
 
   return (
@@ -36,7 +36,7 @@ function TaskList() {
           >
             <ListItemButton
               selected={selectedTask === id}
-              onClick={() => handleEdit(id)}
+              onClick={() => handleSelect(id)}
             >
               <ListItemIcon>
                 {done

@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { TaskContext } from '../context';
 
 function PastTasksCard() {
-  const { task: taskForm, setTask, pastTasks } = useContext(TaskContext);
+  const { setTask, setSelectedTask, pastTasks } = useContext(TaskContext);
 
   return (
     <Card
@@ -30,7 +30,10 @@ function PastTasksCard() {
             <ListItemButton
               key={id}
               dense
-              onClick={() => setTask({ ...taskForm, date, description })}
+              onClick={() => {
+                setTask({ done: false, date, description });
+                setSelectedTask(id);
+              }}
             >
               <ListItemText primary={description} />
             </ListItemButton>

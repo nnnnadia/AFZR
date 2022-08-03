@@ -36,6 +36,19 @@ function TaskProvider({ children }) {
     setPastTasks(pastUnfinishedTasks);
   };
 
+  const getTaskId = () => Date.now();
+
+  const handleSubmit = () => {
+    setTasks([...tasks, { ...taskFormControls, id: getTaskId() }]);
+    setTaskFormControls({ ...taskFormControls, description: '' });
+  };
+
+  const handleEdit = (id) => {
+    const stillTasks = tasks.filter((task) => task.id !== id);
+    setTasks([...stillTasks, { ...taskFormControls, id }]);
+    setTaskFormControls({ ...taskFormControls, description: '', done: false });
+  };
+
   const handleDone = (idToBeDone) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === idToBeDone) return { ...task, done: !task.done };
@@ -47,9 +60,11 @@ function TaskProvider({ children }) {
   const handleDelete = (idToBeDeleted) => {
     const updatedTasks = tasks.filter(({ id }) => id !== idToBeDeleted);
     setTasks(updatedTasks);
+    setTaskFormControls({ ...taskFormControls, done: false, description: '' });
+    setSelectedTask(null);
   };
 
-  const handleEdit = (idToBeEdited) => {
+  const handleSelect = (idToBeEdited) => {
     if (selectedTask === idToBeEdited) {
       setSelectedTask(null);
       setTaskFormControls({ ...taskFormControls, done: false, description: '' });
@@ -78,7 +93,6 @@ function TaskProvider({ children }) {
   const CONTEXT_VALUE = useMemo(() => ({
     tasks,
     setTasks,
-    handleDone,
     task: taskFormControls,
     setTask: setTaskFormControls,
     selectedTask,
@@ -87,8 +101,11 @@ function TaskProvider({ children }) {
     setTodaysDate,
     sortedDates,
     pastTasks,
-    handleDelete,
+    handleSubmit,
     handleEdit,
+    handleDone,
+    handleDelete,
+    handleSelect,
   }));
 
   return (
